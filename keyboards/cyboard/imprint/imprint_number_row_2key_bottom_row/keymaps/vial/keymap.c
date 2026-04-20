@@ -97,3 +97,45 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                             _______, _______, _______,         _______, _______, _______
     )
 };
+
+/*
+ * Per-layer RGB lighting — Blue / Silver / White theme
+ * Uses SOLID_COLOR mode + HSV to avoid overloading split transport.
+ *
+ * Layer 0  Base     Dark Blue   HSV(153, 255, 255)
+ * Layer 1  Sym/Nav  Light Blue  HSV(148, 150, 255)
+ * Layer 4  Mouse    White       HSV(  0,   0, 255)
+ * Default  (others) Dark Blue   HSV(153, 255, 255)
+ */
+static void apply_layer_hsv(uint8_t layer) {
+    switch (layer) {
+        case 1:  // Sym / Nav — Light Blue
+            rgb_matrix_sethsv_noeeprom(148, 150, 255);
+            break;
+        case 4:  // Mouse — White
+            rgb_matrix_sethsv_noeeprom(0, 0, 255);
+            break;
+        default: // Base (0) and all others — Blue
+            rgb_matrix_sethsv_noeeprom(153, 255, 255);
+            break;
+    }
+}
+
+void keyboard_post_init_user(void) {
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+    apply_layer_hsv(get_highest_layer(layer_state | default_layer_state));
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    apply_layer_hsv(get_highest_layer(state | default_layer_state));
+    return state;
+}
+
+layer_state_t default_layer_state_set_user(layer_state_t state) {
+    apply_layer_hsv(get_highest_layer(layer_state | state));
+    return state;
+}
+
+bool rgb_matrix_indicators_user(void) {
+    return true;
+}

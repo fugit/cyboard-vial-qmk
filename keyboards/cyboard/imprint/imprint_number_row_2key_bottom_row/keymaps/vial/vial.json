@@ -2,7 +2,7 @@
     "name": "Imprint",
     "vendorId": "0xFEED",
     "productId": "0x0000",
-    "lighting": "vialrgb",
+    "lighting": "none",
     "customKeycodes": [
         {"name": "L_DPI_INC",
          "title": "Increase left trackball sensitivity",
