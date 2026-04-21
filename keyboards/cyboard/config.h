@@ -19,6 +19,7 @@
 #    define RGB_MATRIX_DEFAULT_VAL RGB_MATRIX_MAXIMUM_BRIGHTNESS
 #    define RGB_MATRIX_KEYPRESSES
 #    define RGB_MATRIX_FRAMEBUFFER_EFFECTS
+#    define RGB_MATRIX_SLEEP // Turn off RGB when host suspends
 #endif
 
 /* Double-tap reset button parameters */
