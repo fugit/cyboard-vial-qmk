@@ -46,7 +46,27 @@ Blue → Silver → White theme (matches mouse pad). Implemented via
 ## Vial Layout Files
 
 Saved layouts live in `/home/keith/Documents/keith/Vial/`.
-Current layout: `vial-layout-20260330-4.vil`
+Current layout: `vial-layout-20260806.vil`
+
+The **live config is the `.vil` / on-device EEPROM, not `keymap.c`.** Per-key
+keycodes, mod-taps, tap-dances, combos, and layers all live in the `.vil`; the
+committed `keymap.c` is only firmware defaults + RGB code. Loading a `.vil`
+overrides `keymap.c` entirely.
+
+### Deploying a `.vil` change (no reflash)
+
+Keycode/layer/tap-dance/combo edits are Vial *dynamic* config — already supported
+by the flashed firmware, so **no `qmk compile`/flash is needed**:
+
+1. Connect the keyboard (both halves over TRRS).
+2. Open Vial (desktop app or `vial.rocks` in Chrome/WebHID); it auto-detects.
+3. `File → Load Saved Layout` → pick the `.vil` in `~/Documents/keith/Vial/`.
+4. Vial writes to EEPROM immediately — no save/reboot. Loading a `.vil` **replaces
+   the entire live config**, so unsaved on-device tweaks are lost.
+
+Reflash (the Build & Flash section) is only needed for `keymap.c`/`config.h`
+changes: new custom keycodes, RGB logic, per-key `get_tapping_term`/
+`get_hold_on_other_key_press`, or other compile-time behavior.
 
 ## Neovim / clangd
 
